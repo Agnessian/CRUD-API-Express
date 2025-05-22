@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Product = require("./models/product.model.js");
+require("dotenv").config();
 const app = express();
 
 //middleware
@@ -10,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 const PORT = 4000;
 
 //routes
-app.use("/api/products", productRoutes);
+//app.use("/api/products", productRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello from Node API server");
@@ -76,9 +77,7 @@ app.delete("/api/product/:id", async (req, res) => {
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://Admin:SUbzieV2h7888U3Y@backenddb.fsq2r5o.mongodb.net/Node-API?retryWrites=true&w=majority&appName=BackendDB"
-  )
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to database!");
     app.listen(PORT, () => {
